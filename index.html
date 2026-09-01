@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Pot Cloud Kitchen | Vikarabad</title>
+  <style>
+    :root {
+      --ambient-glow: #e27d60;
+      --hearth-dark: #1a1210;
+      --clay-red: #c35237;
+      --turmeric: #e8a838;
+      --paper: #f4ebd9;
+      --text: #2c221e;
+      --glass: rgba(44, 34, 30, 0.95);
+      --green: #4caf50;
+      --red: #f44336;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--hearth-dark);
+      color: var(--paper);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .hearth-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 30%, var(--ambient-glow) 0%, rgba(26,18,16,0.95) 65%);
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, background 0.5s ease;
+    }
+
+    .status-banner {
+      background: #110b09;
+      color: var(--paper);
+      text-align: center;
+      padding: 6px 15px;
+      font-size: 0.8rem;
+      border-bottom: 1px dashed rgba(244, 235, 217, 0.2);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-open { background-color: var(--green); box-shadow: 0 0 8px var(--green); }
+    .status-closed { background-color: var(--red); box-shadow: 0 0 8px var(--red); }
+
+    nav {
+      position: fixed;
+      top: 31px;
+      left: 0;
+      width: 100%;
+      background: rgba(26, 18, 16, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 5%;
+      z-index: 999;
+      border-bottom: 1px dashed var(--clay-red);
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-img {
+      height: 90px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-logo {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--turmeric);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: var(--paper);
+      opacity: 0.8;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--paper);
+      text-decoration: none;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--turmeric);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 20px 180px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--turmeric);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    header h2 {
+      font-size: 1.1rem;
+      color: var(--clay-red);
+      margin-bottom: 15px;
+      font-weight: normal;
+    }
+
+    header p {
+      font-style: italic;
+      color: var(--paper);
+      opacity: 0.85;
+      max-width: 650px;
+      margin: 0 auto 20px;
+      font-size: 0.95rem;
+    }
+
+    .meta-badges {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .status-stamp {
+      border: 1px dashed var(--turmeric);
+      color: var(--turmeric);
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--turmeric);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .section-sub {
+      text-align: center;
+      font-style: italic;
+      opacity: 0.8;
+      margin-bottom: 35px;
+      font-size: 0.85rem;
+    }
+
+    .menu-group {
+      margin-bottom: 60px;
+    }
+
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .recipe-tag {
+      background: var(--paper);
+      color: var(--text);
+      padding: 25px 20px 18px;
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+      transform: rotate(-0.5deg);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .recipe-tag:nth-child(even) {
+      transform: rotate(0.8deg);
+    }
+
+    .recipe-tag:hover {
+      transform: translateY(-5px) scale(1.01) rotate(0deg);
+      box-shadow: 0 20px 35px rgba(226, 125, 96, 0.35);
+    }
+
+    .recipe-tag::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: var(--hearth-dark);
+      border-radius: 50%;
+    }
+
+    .tag-header {
+      border-bottom: 2px dashed var(--clay-red);
+      padding-bottom: 8px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .tag-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--clay-red);
+    }
+
+    .tag-price {
+      font-weight: bold;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .tag-body {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      color: #4a3e3d;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      background: rgba(0,0,0,0.06);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .cart-btn {
+      background: var(--clay-red);
+      color: var(--paper);
+      border: none;
+      width: 26px;
+      height: 26px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .cart-btn:hover {
+      background: var(--text);
+    }
+
+    .qty-display {
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      background: rgba(44, 34, 30, 0.6);
+      border: 1px dashed var(--turmeric);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(244, 235, 217, 0.15);
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--turmeric);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+
+    .table-cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .table-cart-btn {
+      background: var(--clay-red);
+      color: var(--paper);
+      border: none;
+      width: 22px;
+      height: 22px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .table-cart-btn:hover {
+      background: var(--turmeric);
+      color: var(--hearth-dark);
+    }
+
+    .table-qty-display {
+      font-weight: bold;
+      font-size: 0.8rem;
+      min-width: 14px;
+      text-align: center;
+    }
+
+    .floating-cart {
+      position: fixed;
+      bottom: 75px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--clay-red);
+      color: var(--paper);
+      padding: 12px 25px;
+      border-radius: 30px;
+      display: none;
+      align-items: center;
+      gap: 15px;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border: 1px solid var(--turmeric);
+    }
+
+    .floating-cart button {
+      background: var(--turmeric);
+      color: var(--hearth-dark);
+      border: none;
+      padding: 6px 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 15px;
+      font-size: 0.75rem;
+    }
+
+    .control-deck {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--glass);
+      border: 1px solid var(--turmeric);
+      padding: 8px 18px;
+      border-radius: 40px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+    }
+
+    .ctrl-btn {
+      background: transparent;
+      border: 1px solid var(--paper);
+      color: var(--paper);
+      padding: 4px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .ctrl-btn:hover, .ctrl-btn.active {
+      background: var(--turmeric);
+      color: var(--hearth-dark);
+      border-color: var(--turmeric);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 1px dashed rgba(244, 235, 217, 0.2);
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    footer a { color: var(--turmeric); text-decoration: none; }
+    .ig-icon { width: 14px; height: 14px; fill: currentColor; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+  <div class="status-banner" id="statusBanner">
+    <span class="status-indicator" id="statusDot"></span>
+    <span id="statusText">Checking kitchen availability...</span>
+  </div>
+
+  <div class="hearth-backdrop" id="hearthGlow"></div>
+
+  <nav>
+    <div class="brand-container">
+      <img src="logo.png" alt="Home Pot Logo" class="brand-logo-img">
+      <div>
+        <a href="#" class="brand-logo">Home Pot</a>
+        <span class="brand-sub">Homely Food, Made With Care</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#non-veg-combos">Non-Veg Combos</a></li>
+      <li><a href="#veg-combos">Veg Combos</a></li>
+      <li><a href="#starters">Starters</a></li>
+      <li><a href="#biryani">Biryani</a></li>
+      <li><a href="#curries">Curries</a></li>
+      <li><a href="#bowls">Rice Bowls</a></li>
+      <li><a href="#extras">Extras</a></li>
+      <li><a href="#pickles">Pickles</a></li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <header>
+      <h1>Home Pot Cloud Kitchen</h1>
+      <h2>Ghar jaisa swaad, har bite mein pyaar.</h2>
+      <p>"The healthiest treats delivered to your door."</p>
+      <div class="meta-badges">
+        <span class="status-stamp">📍 Vikarabad Direct Delivery</span>
+        <span class="status-stamp">📞 9966467070 / 9966998556</span>
+        <a href="https://www.homepot.in" target="_blank" class="status-stamp">🌐 www.homepot.in</a>
+        <a href="https://instagram.com/homepot_cloudkitchen" target="_blank" class="status-stamp">
+          <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          @homepot_cloudkitchen
+        </a>
+      </div>
+    </header>
+
+    <section class="menu-group" id="non-veg-combos">
+      <h2 class="section-title">Non-Veg Combo</h2>
+      <p class="section-sub">Pre-order 3 hrs before | Half (3-4 people) | Full (5-6 people)</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Combo Description</th>
+              <th>Half</th>
+              <th>Full</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bagara Rice + Chicken Curry / Fry / Joints</strong></td>
+              <td>
+                ₹649
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Chicken (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹1099
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Chicken (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Bagara Rice + Mutton Curry / Fry</strong></td>
+              <td>
+                ₹999
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Mutton (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹1799
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Mutton (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Bagara Rice + Egg Masala</strong></td>
+              <td>
+                ₹399
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Egg Masala (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹649
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Egg Masala (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Kushka Rice + Chicken Joints / Fry</strong></td>
+              <td>
+                ₹649
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Kushka Rice + Chicken (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹1099
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Kushka Rice + Chicken (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="menu-group" id="veg-combos">
+      <h2 class="section-title">Veg Combo</h2>
+      <p class="section-sub">Pre-order 3 hrs before | Half (3-4 people) | Full (5-6 people)</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Combo Description</th>
+              <th>Half</th>
+              <th>Full</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bagara Rice + Mirchi ka Salan / Gutti Vankaya / Mixed Veg Kurma</strong></td>
+              <td>
+                ₹399
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Veg Kurma/Salan (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹699
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Veg Kurma/Salan (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Bagara Rice + Kaju Butter Masala / Paneer Butter Masala</strong></td>
+              <td>
+                ₹749
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Half)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Kaju/Paneer Butter (Half)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Half)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹1299
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Bagara Rice + Kaju/Paneer Butter (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Full)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="menu-group" id="starters">
+      <h2 class="section-title">Starters</h2>
+
+      <p class="section-sub">Non-Veg Starters</p>
+      <div class="recipe-grid" style="margin-bottom: 30px;">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Chicken Starters</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Pakodi / Ghee Roast / Fry</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Chicken Starter (Pakodi/Ghee Roast/Fry)', -1)">-</button>
+            <span class="qty-display" id="qty-Chicken Starter (Pakodi/Ghee Roast/Fry)">0</span>
+            <button class="cart-btn" onclick="updateItem('Chicken Starter (Pakodi/Ghee Roast/Fry)', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Mutton Starters</span>
+            <span class="tag-price">₹329</span>
+          </div>
+          <p class="tag-body">Ghee Roast / Fry / Bones Fry / Liver Fry</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Mutton Starter (Ghee Roast/Fry/Bones/Liver)', -1)">-</button>
+            <span class="qty-display" id="qty-Mutton Starter (Ghee Roast/Fry/Bones/Liver)">0</span>
+            <button class="cart-btn" onclick="updateItem('Mutton Starter (Ghee Roast/Fry/Bones/Liver)', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Boti Fry / Brain Fry</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Homestyle traditional non-veg specialty fry.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Boti Fry / Brain Fry', -1)">-</button>
+            <span class="qty-display" id="qty-Boti Fry / Brain Fry">0</span>
+            <button class="cart-btn" onclick="updateItem('Boti Fry / Brain Fry', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Fish Fry (3p)</span>
+            <span class="tag-price">₹199</span>
+          </div>
+          <p class="tag-body">3 pieces of fresh spiced fish fry.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Fish Fry (3p)', -1)">-</button>
+            <span class="qty-display" id="qty-Fish Fry (3p)">0</span>
+            <button class="cart-btn" onclick="updateItem('Fish Fry (3p)', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Apollo Fish</span>
+            <span class="tag-price">₹329</span>
+          </div>
+          <p class="tag-body">Available in Wet, Dry, or Kadak styles.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Apollo Fish [wet/dry/kadak]', -1)">-</button>
+            <span class="qty-display" id="qty-Apollo Fish [wet/dry/kadak]">0</span>
+            <button class="cart-btn" onclick="updateItem('Apollo Fish [wet/dry/kadak]', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Chicken Joints</span>
+            <span class="tag-price">₹179 / ₹339</span>
+          </div>
+          <p class="tag-body">Choice of 1 piece or 2 pieces.</p>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+            <div class="cart-controls">
+              <span style="font-size: 0.75rem;">1 Pc (₹179):</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="table-cart-btn" onclick="updateItem('Chicken Joint (1p)', -1)">-</button>
+                <span class="table-qty-display" id="qty-Chicken Joint (1p)">0</span>
+                <button class="table-cart-btn" onclick="updateItem('Chicken Joint (1p)', 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-controls">
+              <span style="font-size: 0.75rem;">2 Pcs (₹339):</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="table-cart-btn" onclick="updateItem('Chicken Joints (2p)', -1)">-</button>
+                <span class="table-qty-display" id="qty-Chicken Joints (2p)">0</span>
+                <button class="table-cart-btn" onclick="updateItem('Chicken Joints (2p)', 1)">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Karimnagar Kodi Wings</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Telangana style crispy spiced chicken wings.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Karimnagar Kodi Wings', -1)">-</button>
+            <span class="qty-display" id="qty-Karimnagar Kodi Wings">0</span>
+            <button class="cart-btn" onclick="updateItem('Karimnagar Kodi Wings', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-sub">Veg Starters</p>
+      <div class="recipe-grid">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Paneer 65</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Crispy fried spiced paneer cubes.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Paneer 65', -1)">-</button>
+            <span class="qty-display" id="qty-Paneer 65">0</span>
+            <button class="cart-btn" onclick="updateItem('Paneer 65', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Kaju Fry [dry]</span>
+            <span class="tag-price">₹299</span>
+          </div>
+          <p class="tag-body">Golden roasted spiced cashews.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Kaju Fry [dry]', -1)">-</button>
+            <span class="qty-display" id="qty-Kaju Fry [dry]">0</span>
+            <button class="cart-btn" onclick="updateItem('Kaju Fry [dry]', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Gobi 65 / Aloo 65</span>
+            <span class="tag-price">₹179</span>
+          </div>
+          <p class="tag-body">Crispy spiced cauliflower or potato bites.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Gobi 65 / Aloo 65', -1)">-</button>
+            <span class="qty-display" id="qty-Gobi 65 / Aloo 65">0</span>
+            <button class="cart-btn" onclick="updateItem('Gobi 65 / Aloo 65', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-group" id="biryani">
+      <h2 class="section-title">Dum Biryani</h2>
+      <p class="section-sub">Authentic hyderabadi spices cooked on dum</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Biryani Item</th>
+              <th>Single</th>
+              <th>Full</th>
+              <th>Handi</th>
+              <th>Family</th>
+              <th>Jumbo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Chicken Dum</strong></td>
+              <td>
+                ₹149
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Single)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Single)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Single)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹289
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Full)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹449
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Handi)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Handi)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Handi)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹629
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Family)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Family)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Family)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹759
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Jumbo)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Jumbo)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Jumbo)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Mutton Dum</strong></td>
+              <td>
+                ₹229
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Single)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Single)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Single)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹359
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Full)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Full)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Full)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹549
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Handi)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Handi)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Handi)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹849
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Family)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Family)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Family)', 1)">+</button>
+                </div>
+              </td>
+              <td>
+                ₹1099
+                <div class="table-cart-controls">
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Jumbo)', -1)">-</button>
+                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Jumbo)">0</span>
+                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Jumbo)', 1)">+</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="menu-group" id="curries">
+      <h2 class="section-title">Curries</h2>
+
+      <p class="section-sub">Non-Veg Curries</p>
+      <div class="recipe-grid" style="margin-bottom: 30px;">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Chicken Curry</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Shaadi ka chicken / Butter masala / Dhum ka masala</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Chicken Curry', -1)">-</button>
+            <span class="qty-display" id="qty-Chicken Curry">0</span>
+            <button class="cart-btn" onclick="updateItem('Chicken Curry', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Mutton Curry</span>
+            <span class="tag-price">₹319</span>
+          </div>
+          <p class="tag-body">Mutton masala / Dhum ka masala / Methi masala</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Mutton Curry', -1)">-</button>
+            <span class="qty-display" id="qty-Mutton Curry">0</span>
+            <button class="cart-btn" onclick="updateItem('Mutton Curry', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Mutton Special</span>
+            <span class="tag-price">₹999</span>
+          </div>
+          <p class="tag-body">Dalcha / Marag (serves 3 to 4 people)</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Mutton Dalcha / Marag', -1)">-</button>
+            <span class="qty-display" id="qty-Mutton Dalcha / Marag">0</span>
+            <button class="cart-btn" onclick="updateItem('Mutton Dalcha / Marag', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Egg Specials</span>
+            <span class="tag-price">₹169</span>
+          </div>
+          <p class="tag-body">Egg Masala / Egg Curry / Egg Bhurji</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Egg Masala / Curry / Bhurji', -1)">-</button>
+            <span class="qty-display" id="qty-Egg Masala / Curry / Bhurji">0</span>
+            <button class="cart-btn" onclick="updateItem('Egg Masala / Curry / Bhurji', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Omlet</span>
+            <span class="tag-price">₹79</span>
+          </div>
+          <p class="tag-body">Fresh fluffly spiced egg omelet.</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Omlet', -1)">-</button>
+            <span class="qty-display" id="qty-Omlet">0</span>
+            <button class="cart-btn" onclick="updateItem('Omlet', 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-sub">Veg Curries</p>
+      <div class="recipe-grid">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Paneer Specials</span>
+            <span class="tag-price">₹259</span>
+          </div>
+          <p class="tag-body">Butter masala / Roast / Kadai / Kaju butter</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Paneer Curry', -1)">-</button>
+            <span class="qty-display" id="qty-Paneer Curry">0</span>
+            <button class="cart-btn" onclick="updateItem('Paneer Curry', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Jeera Rice + Veg Curry</span>
+            <span class="tag-price">₹299</span>
+          </div>
+          <p class="tag-body">Jeera Rice with Mixed veg curry / Aloo masala / Gobi masala / Dal fry / Dal Tadka</p>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Jeera Rice + Veg Curry', -1)">-</button>
+            <span class="qty-display" id="qty-Jeera Rice + Veg Curry">0</span>
+            <button class="cart-btn" onclick="updateItem('Jeera Rice + Veg Curry', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-group" id="bowls">
+      <h2 class="section-title">Rice Bowl</h2>
+      <div class="recipe-grid">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Kaju Butter Rice Bowl</span>
+            <span class="tag-price">₹159</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Kaju butter rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Kaju butter rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Kaju butter rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Kaju Masala Bowl</span>
+            <span class="tag-price">₹149</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Kaju Masala bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Kaju Masala bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Kaju Masala bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Chicken Rice Bowl</span>
+            <span class="tag-price">₹149</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Chicken rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Chicken rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Chicken rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Butter Chicken Rice Bowl</span>
+            <span class="tag-price">₹159</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Butter chicken rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Butter chicken rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Butter chicken rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Sambar Rice Bowl</span>
+            <span class="tag-price">₹129</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Sambar rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Sambar rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Sambar rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Dal Fry Rice Bowl</span>
+            <span class="tag-price">₹129</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Dal fry rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Dal fry rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Dal fry rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Dal Tadka Rice Bowl</span>
+            <span class="tag-price">₹129</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Dal tadak rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Dal tadak rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Dal tadak rice bowl', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Paneer Butter Masala Bowl</span>
+            <span class="tag-price">₹159</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Paneer butter masala rice bowl', -1)">-</button>
+            <span class="qty-display" id="qty-Paneer butter masala rice bowl">0</span>
+            <button class="cart-btn" onclick="updateItem('Paneer butter masala rice bowl', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-group" id="extras">
+      <h2 class="section-title">Extras</h2>
+      <div class="recipe-grid">
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Ghee</span>
+            <span class="tag-price">₹29</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Ghee', -1)">-</button>
+            <span class="qty-display" id="qty-Ghee">0</span>
+            <button class="cart-btn" onclick="updateItem('Ghee', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Butter</span>
+            <span class="tag-price">₹29</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Butter', -1)">-</button>
+            <span class="qty-display" id="qty-Butter">0</span>
+            <button class="cart-btn" onclick="updateItem('Butter', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Only Biryani Rice</span>
+            <span class="tag-price">₹99</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Only biryani rice', -1)">-</button>
+            <span class="qty-display" id="qty-Only biryani rice">0</span>
+            <button class="cart-btn" onclick="updateItem('Only biryani rice', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">White Rice</span>
+            <span class="tag-price">₹49</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('White rice', -1)">-</button>
+            <span class="qty-display" id="qty-White rice">0</span>
+            <button class="cart-btn" onclick="updateItem('White rice', 1)">+</button>
+          </div>
+        </div>
+
+        <div class="recipe-tag">
+          <div class="tag-header">
+            <span class="tag-title">Only Bagara Rice</span>
+            <span class="tag-price">₹99</span>
+          </div>
+          <div class="cart-controls">
+            <button class="cart-btn" onclick="updateItem('Only bagara rice', -1)">-</button>
+            <span class="qty-display" id="qty-Only bagara rice">0</span>
+            <button class="cart-btn" onclick="updateItem('Only bagara rice', 1)">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-group" id="pickles">
+      <h2 class="section-title">Pickle</h2>
+      <p class="section-sub">Homemade Artisanal Pickles (Bone / Boneless)</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Pickle Item</th>
+              <th>½ kg (Bone / Boneless)</th>
+              <th>1 kg (Bone / Boneless)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Chicken Pickle</strong></td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹699 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Pickle 1/2kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹799 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Pickle 1/2kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹1199 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Pickle 1kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹1499 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Pickle 1kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Chicken Gongura Pickle</strong></td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹699 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1/2kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹799 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1/2kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹1199 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹1499 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Chicken Coriander Pickle</strong></td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹699 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1/2kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹799 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1/2kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹1199 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹1499 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Mutton Pickle</strong></td>
+              <td>—</td>
+              <td>
+                <div style="margin-bottom: 6px;">
+                  ₹2199 (Bone)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Bone)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Mutton Pickle 1kg (Bone)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Bone)', 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  ₹2499 (Boneless)
+                  <div class="table-cart-controls">
+                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Boneless)', -1)">-</button>
+                    <span class="table-qty-display" id="qty-Mutton Pickle 1kg (Boneless)">0</span>
+                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Boneless)', 1)">+</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="floating-cart" id="cartBar">
+    <span id="cartCount">0 items added</span>
+    <button onclick="sendBundledOrder()">Send WhatsApp Order</button>
+  </div>
+
+  <div class="control-deck">
+    <span style="font-size: 0.75rem; letter-spacing: 1px;">HEARTH:</span>
+    <button class="ctrl-btn active" onclick="setHeat('low', this)">Low</button>
+    <button class="ctrl-btn" onclick="setHeat('high', this)">High</button>
+    <button class="ctrl-btn" id="audioToggle" onclick="toggleHearthSound()">🔊 Sound</button>
+  </div>
+
+  <footer>
+    <p>© 2026 Home Pot Cloud Kitchen • Vikarabad Direct Delivery</p>
+    <p>
+      Contact: <a href="tel:9966467070">9966467070</a> / <a href="tel:9966998556">9966998556</a> | 
+      Web: <a href="https://www.homepot.in" target="_blank">www.homepot.in</a> |
+      Instagram: <a href="https://instagram.com/homepot_cloudkitchen" target="_blank">@homepot_cloudkitchen</a>
+    </p>
+  </footer>
+
+  <script>
+    function checkKitchenStatus() {
+      const now = new Date();
+      const hour = now.getHours();
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+
+      if (hour >= 11 && hour < 22) {
+        dot.className = 'status-indicator status-open';
+        text.innerHTML = 'KITCHEN OPEN • Taking Direct WhatsApp Orders';
+      } else {
+        dot.className = 'status-indicator status-closed';
+        text.innerHTML = 'KITCHEN CLOSED • Pre-orders Accepted for Tomorrow';
+      }
+    }
+    checkKitchenStatus();
+
+    let cart = {};
+
+    function updateItem(name, change) {
+      if (!cart[name]) cart[name] = 0;
+      cart[name] += change;
+      if (cart[name] <= 0) delete cart[name];
+
+      const el = document.getElementById(`qty-${name}`);
+      if (el) el.innerText = cart[name] || 0;
+
+      renderCartBar();
+    }
+
+    function renderCartBar() {
+      const cartBar = document.getElementById('cartBar');
+      const cartCount = document.getElementById('cartCount');
+      const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+
+      if (totalItems > 0) {
+        cartBar.style.display = 'flex';
+        cartCount.innerText = `${totalItems} item${totalItems > 1 ? 's' : ''} selected`;
+      } else {
+        cartBar.style.display = 'none';
+      }
+    }
+
+    function sendBundledOrder() {
+      let message = "Hello Home Pot Cloud Kitchen! I would like to order:\n";
+      for (const [item, qty] of Object.entries(cart)) {
+        message += `• ${qty}x ${item}\n`;
+      }
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/919966467070?text=${encoded}`, '_blank');
+    }
+
+    function setHeat(level, btnElement) {
+      document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+      const glow = document.getElementById('hearthGlow');
+      glow.style.opacity = level === 'high' ? '0.7' : '0.3';
+    }
+
+    let audioCtx, isPlaying = false, noiseNode;
+    function toggleHearthSound() {
+      const btn = document.getElementById('audioToggle');
+      if (!isPlaying) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const bufferSize = audioCtx.sampleRate * 2;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = buffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5;
+        }
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = buffer;
+        noiseNode.loop = true;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 380;
+        noiseNode.connect(filter);
+        filter.connect(audioCtx.destination);
+        noiseNode.start();
+        btn.innerText = '🔇 Mute';
+        isPlaying = true;
+      } else {
+        noiseNode.stop();
+        audioCtx.close();
+        btn.innerText = '🔊 Sound';
+        isPlaying = false;
+      }
+    }
+  </script>
+</body>
+</html>
