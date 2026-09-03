@@ -1,1456 +1,2242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Pot Cloud Kitchen | Vikarabad</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HOME POT | Homely Food, Made With Care</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
     :root {
-      --ambient-glow: #e27d60;
-      --hearth-dark: #1a1210;
-      --clay-red: #c35237;
-      --turmeric: #e8a838;
-      --paper: #f4ebd9;
-      --text: #2c221e;
-      --glass: rgba(44, 34, 30, 0.95);
-      --green: #4caf50;
-      --red: #f44336;
+      --font-heading: 'Times New Roman', Times, serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --gold-primary: #d4973b;
+      --gold-hover: #b87f2e;
+      --gold-border: rgba(212, 151, 59, 0.35);
+      --gold-faint: rgba(212, 151, 59, 0.1);
+      --dark-bg: #0d0e10;
+      --dark-card: #151619;
+      --dark-card-hover: #1c1d22;
+      --font-white: #ffffff;
+      --font-light: #eaeaea;
+      --font-muted: #9c9c9c;
+      --font-black: #000000;
+      --color-veg: #22c55e;
+      --color-nonveg: #ef4444;
+      --transition: all 0.25s ease;
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Courier New', Courier, monospace;
-    }
-
-    html {
+      box-sizing: border-box;
       scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--hearth-dark);
-      color: var(--paper);
-      overflow-x: hidden;
+      font-family: var(--font-body);
+      background-color: var(--dark-bg);
+      color: var(--font-white);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    .hearth-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 50% 30%, var(--ambient-glow) 0%, rgba(26,18,16,0.95) 65%);
-      opacity: 0.3;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease, background 0.5s ease;
+    a { text-decoration: none; color: inherit; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--font-white);
     }
 
-    .status-banner {
-      background: #110b09;
-      color: var(--paper);
-      text-align: center;
-      padding: 6px 15px;
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* TOP BAR - DESKTOP */
+    .top-bar {
+      background-color: #060708;
+      border-bottom: 1px solid var(--gold-border);
       font-size: 0.8rem;
-      border-bottom: 1px dashed rgba(244, 235, 217, 0.2);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      color: var(--font-muted);
+      padding: 8px 0;
     }
 
-    .status-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .status-open { background-color: var(--green); box-shadow: 0 0 8px var(--green); }
-    .status-closed { background-color: var(--red); box-shadow: 0 0 8px var(--red); }
-
-    nav {
-      position: fixed;
-      top: 31px;
-      left: 0;
-      width: 100%;
-      background: rgba(26, 18, 16, 0.95);
-      backdrop-filter: blur(10px);
+    .top-bar .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 5%;
-      z-index: 999;
-      border-bottom: 1px dashed var(--clay-red);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .brand-container {
+    .top-bar-loc {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-bar-contacts {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .top-bar-contacts a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--font-light);
+    }
+
+    /* NAVBAR - DESKTOP */
+    .navbar {
+      background-color: rgba(13, 14, 16, 0.98);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--gold-border);
+      padding: 14px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
     .brand-logo-img {
-      height: 90px;
+      height: 48px;
       width: auto;
       object-fit: contain;
     }
 
-    .brand-logo {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: var(--turmeric);
-      letter-spacing: 2px;
+    .logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
       text-transform: uppercase;
-      text-decoration: none;
+      letter-spacing: 0.14em;
+      color: var(--font-white);
+      line-height: 1.1;
     }
 
-    .brand-sub {
+    .logo-text span {
       font-size: 0.7rem;
-      color: var(--paper);
-      opacity: 0.8;
+      letter-spacing: 0.22em;
       display: block;
+      color: var(--font-muted);
+      font-family: var(--font-body);
+      font-weight: 300;
     }
 
     .nav-links {
       display: flex;
-      gap: 12px;
+      gap: 28px;
       list-style: none;
-      flex-wrap: wrap;
     }
 
     .nav-links a {
-      color: var(--paper);
-      text-decoration: none;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: color 0.3s;
+      color: var(--font-muted);
+      transition: var(--transition);
     }
 
-    .nav-links a:hover {
-      color: var(--turmeric);
+    .nav-links a:hover { color: var(--font-white); }
+
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px 20px 180px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    header h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--turmeric);
-      letter-spacing: 3px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    header h2 {
+    .mobile-hamburger {
+      display: none;
+      background: var(--gold-faint);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 4px;
       font-size: 1.1rem;
-      color: var(--clay-red);
-      margin-bottom: 15px;
-      font-weight: normal;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
 
-    header p {
-      font-style: italic;
-      color: var(--paper);
-      opacity: 0.85;
-      max-width: 650px;
-      margin: 0 auto 20px;
-      font-size: 0.95rem;
+    /* MOBILE SLIDE-IN DRAWER */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 78%;
+      max-width: 290px;
+      height: 100%;
+      background-color: #0b0c0e;
+      border-left: 1px solid var(--gold-border);
+      z-index: 10002;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      box-shadow: -6px 0 25px rgba(0,0,0,0.9);
     }
 
-    .meta-badges {
+    .mobile-drawer.open { right: 0; }
+
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 10001;
+      backdrop-filter: blur(4px);
+    }
+
+    .drawer-backdrop.open { display: block; }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .drawer-links a {
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--font-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-footer {
+      margin-top: auto;
+      border-top: 1px solid var(--gold-border);
+      padding-top: 12px;
+      font-size: 0.72rem;
+      color: var(--font-muted);
+    }
+
+    /* BUTTONS - DESKTOP */
+    .btn {
+      padding: 10px 22px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+      min-height: 40px;
+    }
+
+    .btn-gold {
+      background-color: var(--gold-primary);
+      color: var(--font-black);
+      border: 1px solid var(--gold-primary);
+    }
+
+    .btn-gold:hover {
+      background-color: var(--gold-hover);
+      border-color: var(--gold-hover);
+      color: var(--font-black);
+    }
+
+    .btn-outline-gold {
+      background-color: transparent;
+      color: var(--font-white);
+      border: 1px solid var(--gold-primary);
+    }
+
+    .btn-outline-gold:hover {
+      background-color: var(--gold-primary);
+      color: var(--font-black);
+    }
+
+    /* HERO - DESKTOP */
+    .hero {
+      position: relative;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(13, 14, 16, 0.86) 0%, rgba(13, 14, 16, 0.98) 100%),
+        url('Hero_background.png') center/cover no-repeat;
+      border-bottom: 1px solid var(--gold-border);
+      text-align: center;
+      padding: 35px 0;
+    }
+
+    .hero-box { max-width: 800px; margin: auto; }
+
+    .hero-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--gold-border);
+      background: var(--gold-faint);
+      padding: 6px 16px;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+      color: var(--font-light);
+      border-radius: 40px;
+    }
+
+    .hero-brand-badge img { height: 24px; width: auto; }
+
+    .hero-title {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: var(--font-white);
+    }
+
+    .hero-title em { font-style: italic; }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--font-muted);
+      max-width: 600px;
+      margin: 0 auto 25px auto;
+      font-weight: 300;
+      padding: 0 8px;
+    }
+
+    .hero-actions {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .status-stamp {
-      border: 1px dashed var(--turmeric);
-      color: var(--turmeric);
-      padding: 4px 12px;
-      font-size: 0.75rem;
+    /* SECTIONS - DESKTOP */
+    section { padding: 65px 0; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      color: var(--font-muted);
+      display: block;
+      margin-bottom: 6px;
     }
 
     .section-title {
-      font-size: 1.8rem;
-      color: var(--turmeric);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-align: center;
-      margin-bottom: 5px;
+      font-size: 2.1rem;
+      color: var(--font-white);
     }
 
-    .section-sub {
-      text-align: center;
-      font-style: italic;
-      opacity: 0.8;
-      margin-bottom: 35px;
-      font-size: 0.85rem;
-    }
-
-    .menu-group {
-      margin-bottom: 60px;
-    }
-
-    .recipe-grid {
+    /* ABOUT - DESKTOP */
+    .about-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-
-    .recipe-tag {
-      background: var(--paper);
-      color: var(--text);
-      padding: 25px 20px 18px;
-      border-radius: 4px;
-      position: relative;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-      transform: rotate(-0.5deg);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .recipe-tag:nth-child(even) {
-      transform: rotate(0.8deg);
-    }
-
-    .recipe-tag:hover {
-      transform: translateY(-5px) scale(1.01) rotate(0deg);
-      box-shadow: 0 20px 35px rgba(226, 125, 96, 0.35);
-    }
-
-    .recipe-tag::before {
-      content: '';
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 10px;
-      height: 10px;
-      background: var(--hearth-dark);
-      border-radius: 50%;
-    }
-
-    .tag-header {
-      border-bottom: 2px dashed var(--clay-red);
-      padding-bottom: 8px;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .tag-title {
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--clay-red);
-    }
-
-    .tag-price {
-      font-weight: bold;
-      font-size: 0.95rem;
-      white-space: nowrap;
-    }
-
-    .tag-body {
-      font-size: 0.8rem;
-      line-height: 1.4;
-      margin-bottom: 12px;
-      color: #4a3e3d;
-    }
-
-    .cart-controls {
-      display: flex;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 8px;
-      background: rgba(0,0,0,0.06);
-      padding: 4px 8px;
-      border-radius: 4px;
     }
 
-    .cart-btn {
-      background: var(--clay-red);
-      color: var(--paper);
-      border: none;
-      width: 26px;
-      height: 26px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 3px;
+    .about-img {
+      border: 1px solid var(--gold-border);
+      padding: 6px;
+      background: var(--dark-card);
+      border-radius: 6px;
     }
 
-    .cart-btn:hover {
-      background: var(--text);
-    }
-
-    .qty-display {
-      font-weight: bold;
-      font-size: 0.85rem;
-    }
-
-    .table-container {
-      overflow-x: auto;
-      background: rgba(44, 34, 30, 0.6);
-      border: 1px dashed var(--turmeric);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-    }
-
-    table {
+    .about-img img {
       width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.85rem;
+      height: auto;
+      display: block;
+      border-radius: 4px;
     }
 
-    th, td {
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(244, 235, 217, 0.15);
-      vertical-align: middle;
+    .pillar-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
     }
 
-    th {
-      color: var(--turmeric);
+    .pillar-item {
+      border-left: 2px solid var(--gold-primary);
+      padding-left: 10px;
+      font-size: 0.8rem;
+      color: var(--font-light);
       text-transform: uppercase;
-      font-size: 0.75rem;
+      letter-spacing: 0.05em;
     }
 
-    .table-cart-controls {
+    /* STATS - DESKTOP */
+    .stats-strip {
+      background-color: var(--dark-card);
+      border-top: 1px solid var(--gold-border);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 35px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-family: var(--font-heading);
+      font-size: 2.3rem;
+      color: var(--font-white);
+      margin-bottom: 2px;
+    }
+
+    .stat-lbl {
+      color: var(--font-muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* VALUES - DESKTOP */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .val-card {
+      background: var(--dark-card);
+      border: 1px solid var(--gold-border);
+      padding: 24px 18px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    .val-card:hover { border-color: var(--gold-primary); }
+
+    .val-num {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--font-muted);
+      margin-bottom: 8px;
+    }
+
+    .val-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: var(--font-white);
+    }
+
+    .val-card p {
+      color: var(--font-muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* MODAL POPUP - DESKTOP */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      overflow-y: auto;
+      padding: 12px 6px;
+    }
+
+    .modal-backdrop.active {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .table-cart-btn {
-      background: var(--clay-red);
-      color: var(--paper);
-      border: none;
-      width: 22px;
-      height: 22px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 3px;
-      display: inline-flex;
       align-items: center;
       justify-content: center;
     }
 
-    .table-cart-btn:hover {
-      background: var(--turmeric);
-      color: var(--hearth-dark);
-    }
-
-    .table-qty-display {
-      font-weight: bold;
-      font-size: 0.8rem;
-      min-width: 14px;
-      text-align: center;
-    }
-
-    .floating-cart {
-      position: fixed;
-      bottom: 75px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--clay-red);
-      color: var(--paper);
-      padding: 12px 25px;
-      border-radius: 30px;
-      display: none;
-      align-items: center;
-      gap: 15px;
-      z-index: 1000;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      border: 1px solid var(--turmeric);
-    }
-
-    .floating-cart button {
-      background: var(--turmeric);
-      color: var(--hearth-dark);
-      border: none;
-      padding: 6px 14px;
-      font-weight: bold;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 15px;
-      font-size: 0.75rem;
-    }
-
-    .control-deck {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--glass);
-      border: 1px solid var(--turmeric);
-      padding: 8px 18px;
-      border-radius: 40px;
+    .modal-window {
+      background-color: var(--dark-bg);
+      border: 1px solid var(--gold-primary);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 1140px;
+      margin: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
       display: flex;
-      gap: 12px;
-      align-items: center;
-      z-index: 999;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
+      flex-direction: column;
+      max-height: 94vh;
     }
 
-    .ctrl-btn {
+    .modal-top {
+      background-color: var(--dark-card);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gold-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .modal-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-brand img { height: 36px; width: auto; }
+
+    .modal-top h2 {
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--font-white);
+      line-height: 1.1;
+    }
+
+    .modal-top p {
+      font-size: 0.72rem;
+      color: var(--font-muted);
+    }
+
+    .close-btn {
       background: transparent;
-      border: 1px solid var(--paper);
-      color: var(--paper);
-      padding: 4px 10px;
+      border: none;
+      color: var(--font-white);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 6px 10px;
+    }
+
+    /* MENU TABS - DESKTOP */
+    .menu-filter-bar {
+      display: flex;
+      overflow-x: auto;
+      background-color: #08090b;
+      border-bottom: 1px solid var(--gold-border);
+      padding: 8px 12px;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .menu-filter-bar::-webkit-scrollbar { display: none; }
+
+    .filter-tab {
+      background: transparent;
+      border: 1px solid var(--gold-border);
+      color: var(--font-muted);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 6px 14px;
       border-radius: 20px;
       cursor: pointer;
-      font-size: 0.75rem;
+      white-space: nowrap;
+      transition: var(--transition);
+      flex-shrink: 0;
+      min-height: 36px;
+    }
+
+    .filter-tab.active,
+    .filter-tab:hover {
+      background: var(--gold-primary);
+      color: var(--font-black);
+      border-color: var(--gold-primary);
+      font-weight: 700;
+    }
+
+    /* MODAL GRID - DESKTOP */
+    .modal-content-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .menu-scroll-pane {
+      overflow-y: auto;
+      padding: 16px;
+      border-right: 1px solid var(--gold-border);
+    }
+
+    .menu-tab-view { display: none; }
+    .menu-tab-view.active { display: block; }
+
+    .tab-category-title {
+      font-size: 1.25rem;
+      margin-bottom: 2px;
       text-transform: uppercase;
-      transition: all 0.3s ease;
+      letter-spacing: 0.06em;
+      color: var(--font-white);
     }
 
-    .ctrl-btn:hover, .ctrl-btn.active {
-      background: var(--turmeric);
-      color: var(--hearth-dark);
-      border-color: var(--turmeric);
+    .tab-category-note {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: var(--font-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 2px;
     }
 
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      border-top: 1px dashed rgba(244, 235, 217, 0.2);
+    /* FOOD ROWS - DESKTOP */
+    .food-row {
+      background: var(--dark-card);
+      border: 1px solid var(--gold-border);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .food-info { flex: 1; }
+
+    .food-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--font-white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+    }
+
+    .food-sub {
+      font-size: 0.74rem;
+      color: var(--font-muted);
+      margin-top: 3px;
+    }
+
+    /* FOOD INDICATOR SYMBOLS */
+    .food-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      min-width: 14px;
+      min-height: 14px;
+      border-radius: 3px;
+      background-color: transparent;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .food-indicator.veg-symbol { border: 1.5px solid var(--color-veg); }
+    .food-indicator.veg-symbol::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-veg);
+      border-radius: 50%;
+    }
+
+    .food-indicator.nonveg-symbol { border: 1.5px solid var(--color-nonveg); }
+    .food-indicator.nonveg-symbol::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 3.5px solid transparent;
+      border-right: 3.5px solid transparent;
+      border-bottom: 6px solid var(--color-nonveg);
+    }
+
+    .food-ctrls {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .food-price {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--font-white);
+    }
+
+    .variant-picker {
+      background: #08090a;
+      color: var(--font-white);
+      border: 1px solid var(--gold-border);
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      max-width: 170px;
+      height: 36px;
+    }
+
+    .add-btn {
+      background: var(--gold-primary);
+      color: var(--font-black);
+      border: 1px solid var(--gold-primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 34px;
+      min-width: 65px;
+    }
+
+    .add-btn:active { transform: scale(0.96); }
+
+    /* CART PANE - DESKTOP */
+    .cart-pane {
+      background-color: #111215;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .cart-head {
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-head h3 {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      color: var(--font-white);
+    }
+
+    .cart-counter {
+      font-size: 0.72rem;
+      color: var(--font-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .cart-list {
+      max-height: 220px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--gold-border);
       font-size: 0.8rem;
-      opacity: 0.8;
     }
 
-    footer a { color: var(--turmeric); text-decoration: none; }
-    .ig-icon { width: 14px; height: 14px; fill: currentColor; vertical-align: middle; }
+    .cart-item-name { color: var(--font-white); font-weight: 500; }
+    .cart-item-rate { color: var(--font-muted); font-size: 0.7rem; }
+
+    .cart-qty-buttons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cart-qty-btn {
+      background: #25262a;
+      color: var(--font-white);
+      border: 1px solid var(--gold-border);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 0.85rem;
+    }
+
+    .cart-footer {
+      border-top: 1px solid var(--gold-border);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .total-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--font-white);
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #08090b;
+      border: 1px solid var(--gold-border);
+      color: var(--font-white);
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      margin-bottom: 8px;
+      border-radius: 4px;
+      min-height: 42px;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      background: #25D366;
+      color: var(--font-black);
+      border: none;
+      border-radius: 4px;
+      padding: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      min-height: 44px;
+    }
+
+    /* STICKY BOTTOM BAR */
+    .mobile-bottom-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #070809;
+      border-top: 1px solid var(--gold-border);
+      z-index: 9998;
+      height: 52px;
+      padding: 0 8px;
+      align-items: center;
+      justify-content: space-around;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.85);
+    }
+
+    .mobile-bottom-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      color: var(--font-muted);
+      letter-spacing: 0.02em;
+      gap: 2px;
+      flex: 1;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .mobile-bottom-item i { font-size: 0.95rem; color: var(--gold-primary); }
+
+    .bottom-order-pill {
+      background: var(--gold-primary);
+      color: var(--font-black);
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* FOOTER - DESKTOP */
+    footer {
+      background: #060708;
+      border-top: 1px solid var(--gold-border);
+      padding: 50px 0 20px 0;
+      font-size: 0.82rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 35px;
+      margin-bottom: 35px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: var(--font-white);
+    }
+
+    .footer-col p {
+      color: var(--font-muted);
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 6px; }
+    .footer-col ul a { color: var(--font-muted); }
+    .footer-col ul a:hover { color: var(--font-white); }
+
+    .bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 18px;
+      text-align: center;
+      color: var(--font-muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========================================================= */
+    /* EXCLUSIVE COMPACT MOBILE ADJUSTMENTS (<= 768px)          */
+    /* ========================================================= */
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 56px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      /* Ultra-compact Top Bar for Mobile */
+      .top-bar {
+        padding: 2px 0;
+        font-size: 0.58rem;
+        line-height: 1.1;
+      }
+      .top-bar .container {
+        gap: 2px;
+      }
+      .top-bar-loc {
+        font-size: 0.58rem;
+        max-width: 52%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        gap: 3px;
+      }
+      .top-bar-loc i {
+        font-size: 0.55rem;
+      }
+      .top-bar-contacts {
+        font-size: 0.58rem;
+        gap: 4px;
+      }
+      .top-bar-contacts a {
+        gap: 3px;
+      }
+      .phone-alt {
+        display: none;
+      }
+
+      /* Compact Navigation Bar */
+      .navbar {
+        padding: 6px 0;
+      }
+      .brand-logo-img {
+        height: 32px;
+      }
+      .logo-text {
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+      }
+      .logo-text span {
+        font-size: 0.55rem;
+        letter-spacing: 0.12em;
+      }
+      .nav-links {
+        display: none;
+      }
+      .nav-right-actions .btn {
+        display: none;
+      }
+      .mobile-hamburger {
+        display: flex;
+        width: 32px;
+        height: 32px;
+        font-size: 0.95rem;
+      }
+      .mobile-bottom-bar {
+        display: flex;
+      }
+
+      /* Compact Hero Section */
+      .hero {
+        min-height: auto;
+        padding: 28px 0 32px 0;
+      }
+      .hero-brand-badge {
+        padding: 3px 10px;
+        font-size: 0.62rem;
+        margin-bottom: 10px;
+      }
+      .hero-brand-badge img {
+        height: 18px;
+      }
+      .hero-title {
+        font-size: 1.55rem;
+        line-height: 1.2;
+        margin-bottom: 8px;
+      }
+      .hero-desc {
+        font-size: 0.78rem;
+        margin-bottom: 16px;
+        line-height: 1.4;
+      }
+      .hero-actions .btn {
+        padding: 7px 14px;
+        font-size: 0.68rem;
+        min-height: 32px;
+      }
+
+      /* Compact Sections & Headers */
+      section {
+        padding: 35px 0;
+      }
+      .section-header {
+        margin-bottom: 20px;
+      }
+      .section-subtitle {
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        margin-bottom: 3px;
+      }
+      .section-title {
+        font-size: 1.3rem;
+      }
+
+      /* Compact About Grid */
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .about-img {
+        padding: 4px;
+      }
+      .about-grid p {
+        font-size: 0.78rem !important;
+        margin: 8px 0 !important;
+        line-height: 1.5 !important;
+      }
+      .pillar-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .pillar-item {
+        font-size: 0.68rem;
+        padding-left: 6px;
+        border-left-width: 1.5px;
+      }
+
+      /* Compact Stats */
+      .stats-strip {
+        padding: 20px 0;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .stat-val {
+        font-size: 1.55rem;
+      }
+      .stat-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+      }
+
+      /* Compact Values / Standards */
+      .values-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .val-card {
+        padding: 14px 12px;
+      }
+      .val-num {
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+      }
+      .val-card h3 {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+      }
+      .val-card p {
+        font-size: 0.74rem;
+        line-height: 1.4;
+      }
+
+      /* Compact Modal Popup / Sheet */
+      .modal-backdrop {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .modal-window {
+        max-height: 94vh;
+        margin: 0;
+        border-radius: 12px 12px 0 0;
+        border-bottom: none;
+      }
+      .modal-top {
+        padding: 8px 12px;
+      }
+      .modal-brand img {
+        height: 28px;
+      }
+      .modal-top h2 {
+        font-size: 0.95rem;
+      }
+      .modal-top p {
+        font-size: 0.62rem;
+      }
+      .close-btn {
+        font-size: 1.3rem;
+        padding: 2px 6px;
+      }
+
+      /* Compact Menu Filter Tabs */
+      .menu-filter-bar {
+        padding: 5px 8px;
+        gap: 5px;
+      }
+      .filter-tab {
+        font-size: 0.64rem;
+        padding: 4px 10px;
+        min-height: 28px;
+      }
+
+      /* Compact Modal Body & Food Cards */
+      .modal-content-grid {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
+      .menu-scroll-pane {
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid var(--gold-border);
+      }
+      .tab-category-title {
+        font-size: 1rem;
+      }
+      .tab-category-note {
+        font-size: 0.62rem;
+        margin-bottom: 8px;
+      }
+      .food-row {
+        padding: 9px 10px;
+        margin-bottom: 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .food-name {
+        font-size: 0.8rem;
+        gap: 5px;
+      }
+      .food-sub {
+        font-size: 0.66rem;
+        margin-top: 2px;
+      }
+      .food-indicator {
+        width: 11px;
+        height: 11px;
+        min-width: 11px;
+        min-height: 11px;
+      }
+      .food-indicator.veg-symbol::after {
+        width: 4.5px;
+        height: 4.5px;
+      }
+      .food-indicator.nonveg-symbol::after {
+        border-left-width: 2.5px;
+        border-right-width: 2.5px;
+        border-bottom-width: 4.5px;
+      }
+      .food-ctrls {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px dashed rgba(212, 151, 59, 0.2);
+        padding-top: 6px;
+        margin-top: 2px;
+      }
+      .variant-picker {
+        max-width: 60%;
+        font-size: 0.68rem;
+        padding: 3px 5px;
+        height: 28px;
+      }
+      .food-price {
+        font-size: 0.9rem;
+      }
+      .add-btn {
+        font-size: 0.62rem;
+        padding: 4px 10px;
+        min-height: 26px;
+        min-width: 50px;
+      }
+
+      /* Compact Cart Pane */
+      .cart-pane {
+        padding: 12px;
+      }
+      .cart-head h3 {
+        font-size: 0.95rem;
+      }
+      .cart-counter {
+        font-size: 0.64rem;
+      }
+      .cart-list {
+        max-height: 160px;
+      }
+      .cart-row {
+        padding: 5px 0;
+        font-size: 0.72rem;
+      }
+      .cart-item-rate {
+        font-size: 0.62rem;
+      }
+      .cart-qty-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.72rem;
+      }
+      .cart-footer {
+        padding-top: 8px;
+        margin-top: 8px;
+      }
+      .total-display {
+        font-size: 1rem;
+        margin-bottom: 6px;
+      }
+      .form-control {
+        padding: 6px 9px;
+        font-size: 0.72rem;
+        min-height: 32px;
+        margin-bottom: 6px;
+      }
+      .btn-checkout {
+        padding: 8px;
+        font-size: 0.72rem;
+        min-height: 36px;
+      }
+
+      /* Compact Footer */
+      footer {
+        padding: 25px 0 15px 0;
+        font-size: 0.72rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+      .footer-col h4 {
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+      }
+      .footer-col p {
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+      .bottom-bar {
+        padding-top: 10px;
+        font-size: 0.65rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="status-banner" id="statusBanner">
-    <span class="status-indicator" id="statusDot"></span>
-    <span id="statusText">Checking kitchen availability...</span>
-  </div>
-
-  <div class="hearth-backdrop" id="hearthGlow"></div>
-
-  <nav>
-    <div class="brand-container">
-      <img src="logo.png" alt="Home Pot Logo" class="brand-logo-img">
-      <div>
-        <a href="#" class="brand-logo">Home Pot</a>
-        <span class="brand-sub">Homely Food, Made With Care</span>
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-loc">
+        <i class="fa-solid fa-location-dot" style="color: var(--gold-primary);"></i>
+        <span>Vikarabad Cloud Kitchen</span>
       </div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#non-veg-combos">Non-Veg Combos</a></li>
-      <li><a href="#veg-combos">Veg Combos</a></li>
-      <li><a href="#starters">Starters</a></li>
-      <li><a href="#biryani">Biryani</a></li>
-      <li><a href="#curries">Curries</a></li>
-      <li><a href="#bowls">Rice Bowls</a></li>
-      <li><a href="#extras">Extras</a></li>
-      <li><a href="#pickles">Pickles</a></li>
-    </ul>
-  </nav>
-
-  <div class="content">
-    <header>
-      <h1>Home Pot Cloud Kitchen</h1>
-      <h2>Ghar jaisa swaad, har bite mein pyaar.</h2>
-      <p>"The healthiest treats delivered to your door."</p>
-      <div class="meta-badges">
-        <span class="status-stamp">📍 Vikarabad Direct Delivery</span>
-        <span class="status-stamp">📞 9966467070 / 9966998556</span>
-        <a href="https://www.homepot.in" target="_blank" class="status-stamp">🌐 www.homepot.in</a>
-        <a href="https://instagram.com/homepot_cloudkitchen" target="_blank" class="status-stamp">
-          <svg class="ig-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          @homepot_cloudkitchen
+      <div class="top-bar-contacts">
+        <a href="tel:9966467070">
+          <i class="fa-solid fa-phone" style="color: var(--gold-primary);"></i> 9966467070
+        </a>
+        <span class="phone-alt">|</span>
+        <a href="https://wa.me/919966998556" target="_blank" class="phone-alt">
+          <i class="fa-brands fa-whatsapp" style="color: var(--gold-primary);"></i> 9966998556
         </a>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <section class="menu-group" id="non-veg-combos">
-      <h2 class="section-title">Non-Veg Combo</h2>
-      <p class="section-sub">Pre-order 3 hrs before | Half (3-4 people) | Full (5-6 people)</p>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Combo Description</th>
-              <th>Half</th>
-              <th>Full</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Bagara Rice + Chicken Curry / Fry / Joints</strong></td>
-              <td>
-                ₹649
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Chicken (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹1099
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Chicken (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Chicken (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Bagara Rice + Mutton Curry / Fry</strong></td>
-              <td>
-                ₹999
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Mutton (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹1799
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Mutton (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Mutton (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Bagara Rice + Egg Masala</strong></td>
-              <td>
-                ₹399
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Egg Masala (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹649
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Egg Masala (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Egg Masala (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Kushka Rice + Chicken Joints / Fry</strong></td>
-              <td>
-                ₹649
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Kushka Rice + Chicken (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹1099
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Kushka Rice + Chicken (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Kushka Rice + Chicken (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <header class="navbar">
+    <div class="container">
+      <div class="logo-container">
+        <img src="logo.png" alt="Home Pot Logo" class="brand-logo-img" />
+        <a href="#" class="logo-text">
+          HOME POT
+          <span>Cloud Kitchen</span>
+        </a>
       </div>
-    </section>
-
-    <section class="menu-group" id="veg-combos">
-      <h2 class="section-title">Veg Combo</h2>
-      <p class="section-sub">Pre-order 3 hrs before | Half (3-4 people) | Full (5-6 people)</p>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Combo Description</th>
-              <th>Half</th>
-              <th>Full</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Bagara Rice + Mirchi ka Salan / Gutti Vankaya / Mixed Veg Kurma</strong></td>
-              <td>
-                ₹399
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Veg Kurma/Salan (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹699
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Veg Kurma/Salan (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Veg Kurma/Salan (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Bagara Rice + Kaju Butter Masala / Paneer Butter Masala</strong></td>
-              <td>
-                ₹749
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Half)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Kaju/Paneer Butter (Half)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Half)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹1299
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Bagara Rice + Kaju/Paneer Butter (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Bagara Rice + Kaju/Paneer Butter (Full)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#standards">Standards</a></li>
+        <li><a href="javascript:void(0)" onclick="openOrderModal()">Food Menu</a></li>
+      </ul>
+      <div class="nav-right-actions">
+        <button class="btn btn-gold" onclick="openOrderModal()">Order Now</button>
+        <button class="mobile-hamburger" onclick="toggleDrawer()" aria-label="Open mobile menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <section class="menu-group" id="starters">
-      <h2 class="section-title">Starters</h2>
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <img src="logo.png" alt="Home Pot" style="height:26px;" />
+        <span style="font-family:var(--font-heading); font-size:1rem;">HOME POT</span>
+      </div>
+      <button class="close-btn" onclick="toggleDrawer()">&times;</button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="#about" onclick="toggleDrawer()"><i class="fa-solid fa-circle-info" style="color:var(--gold-primary);"></i> About Us</a></li>
+      <li><a href="#standards" onclick="toggleDrawer()"><i class="fa-solid fa-check-double" style="color:var(--gold-primary);"></i> Quality Standards</a></li>
+      <li><a href="javascript:void(0)" onclick="toggleDrawer(); openOrderModal();"><i class="fa-solid fa-utensils" style="color:var(--gold-primary);"></i> Food Menu & Combos</a></li>
+      <li><a href="https://wa.me/919966467070" target="_blank"><i class="fa-brands fa-whatsapp" style="color:var(--gold-primary);"></i> Chat on WhatsApp</a></li>
+      <li><a href="tel:9966467070"><i class="fa-solid fa-phone" style="color:var(--gold-primary);"></i> Call Kitchen (Direct)</a></li>
+    </ul>
+    <div class="drawer-footer">
+      <p>Vikarabad Direct Delivery</p>
+      <p style="color:var(--gold-primary); margin-top:2px;">WWW.HOMEPOT.IN</p>
+    </div>
+  </aside>
 
-      <p class="section-sub">Non-Veg Starters</p>
-      <div class="recipe-grid" style="margin-bottom: 30px;">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Chicken Starters</span>
-            <span class="tag-price">₹259</span>
-          </div>
-          <p class="tag-body">Pakodi / Ghee Roast / Fry</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Chicken Starter (Pakodi/Ghee Roast/Fry)', -1)">-</button>
-            <span class="qty-display" id="qty-Chicken Starter (Pakodi/Ghee Roast/Fry)">0</span>
-            <button class="cart-btn" onclick="updateItem('Chicken Starter (Pakodi/Ghee Roast/Fry)', 1)">+</button>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-box">
+        <div class="hero-brand-badge">
+          <img src="logo.png" alt="Home Pot Emblem" />
+          <span>WWW.HOMEPOT.IN</span>
+        </div>
+        <h1 class="hero-title">Ghar Jaisa Swaad, <br /><em>Har Bite Mein Pyaar.</em></h1>
+        <p class="hero-desc">
+          "Homely food, made with care." Pure ingredients, traditional recipes, and the healthiest treats delivered directly to your doorstep in Vikarabad.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-gold" onclick="openOrderModal()">View Menu & Order</button>
+          <a href="#about" class="btn btn-outline-gold">Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img">
+          <img src="Aboutimage.jpg" alt="Home Pot Cooking" />
+        </div>
+        <div>
+          <span class="section-subtitle">Purity In Every Pot</span>
+          <h2 class="section-title">Freshly Prepared Everyday</h2>
+          <p style="color: var(--font-muted); margin: 16px 0; font-size: 0.9rem; line-height: 1.6;">
+            Home Pot Cloud Kitchen is established on the promise of real, home-cooked food. We reject bulk reheating, artificial chemicals, and synthetic flavor enhancers. Every order of Bagara rice, Biryani, Curries, and Homestyle Pickles is cooked fresh on demand with handpicked spices and pure oils.
+          </p>
+          <div class="pillar-list">
+            <div class="pillar-item">100% Homely Food</div>
+            <div class="pillar-item">Fresh Daily Prep</div>
+            <div class="pillar-item">Pure Ingredients</div>
+            <div class="pillar-item">Hygienic Kitchen</div>
+            <div class="pillar-item">Handcrafted Pickles</div>
+            <div class="pillar-item">Timely Delivery</div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Mutton Starters</span>
-            <span class="tag-price">₹329</span>
-          </div>
-          <p class="tag-body">Ghee Roast / Fry / Bones Fry / Liver Fry</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Mutton Starter (Ghee Roast/Fry/Bones/Liver)', -1)">-</button>
-            <span class="qty-display" id="qty-Mutton Starter (Ghee Roast/Fry/Bones/Liver)">0</span>
-            <button class="cart-btn" onclick="updateItem('Mutton Starter (Ghee Roast/Fry/Bones/Liver)', 1)">+</button>
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-val">100%</div>
+          <div class="stat-lbl">Homely Flavors</div>
+        </div>
+        <div>
+          <div class="stat-val">3 Hrs</div>
+          <div class="stat-lbl">Pre-Order Combos</div>
+        </div>
+        <div>
+          <div class="stat-val">40+</div>
+          <div class="stat-lbl">Fresh Items</div>
+        </div>
+        <div>
+          <div class="stat-val">5.0 ★</div>
+          <div class="stat-lbl">Customer Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="standards">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">The Cloud Kitchen Difference</span>
+        <h2 class="section-title">Our Culinary Values</h2>
+      </div>
+      <div class="values-grid">
+        <div class="val-card">
+          <div class="val-num">01</div>
+          <h3>Cooked On Demand</h3>
+          <p>No frozen gravies or batch curries. Each order is prepared fresh on your request to preserve nutrients and authentic homestyle taste.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-num">02</div>
+          <h3>Traditional Bagara Rice</h3>
+          <p>Fragrant, non-greasy Telangana style Bagara rice crafted with aromatic whole spices and tempered to perfection.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-num">03</div>
+          <h3>Portions for Gatherings</h3>
+          <p>Pre-order combo trays specifically portioned for 3–4 people (Half) or 5–6 people (Full) for worry-free hosting.</p>
+        </div>
+        <div class="val-card">
+          <div class="val-num">04</div>
+          <h3>Pure Pickling Heritage</h3>
+          <p>Authentic Gongura, Coriander, Chicken, and Mutton pickles packed with bone and bone-less options.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-backdrop" id="orderModal">
+    <div class="modal-window">
+      <div class="modal-top">
+        <div class="modal-brand">
+          <img src="logo.png" alt="Home Pot Icon" />
+          <div>
+            <h2>HOME POT MENU</h2>
+            <p>Vikarabad Delivery Menu</p>
           </div>
         </div>
+        <button class="close-btn" onclick="closeOrderModal()">&times;</button>
+      </div>
 
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Boti Fry / Brain Fry</span>
-            <span class="tag-price">₹259</span>
-          </div>
-          <p class="tag-body">Homestyle traditional non-veg specialty fry.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Boti Fry / Brain Fry', -1)">-</button>
-            <span class="qty-display" id="qty-Boti Fry / Brain Fry">0</span>
-            <button class="cart-btn" onclick="updateItem('Boti Fry / Brain Fry', 1)">+</button>
-          </div>
-        </div>
+      <div class="menu-filter-bar">
+        <button class="filter-tab active" onclick="showTab('combos', this)">Combos</button>
+        <button class="filter-tab" onclick="showTab('biryani', this)">Biryani</button>
+        <button class="filter-tab" onclick="showTab('starters', this)">Starters</button>
+        <button class="filter-tab" onclick="showTab('curries', this)">Curries</button>
+        <button class="filter-tab" onclick="showTab('ricebowls', this)">Rice Bowls</button>
+        <button class="filter-tab" onclick="showTab('pickles', this)">Pickles</button>
+        <button class="filter-tab" onclick="showTab('extras', this)">Extras</button>
+      </div>
 
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Fish Fry (3p)</span>
-            <span class="tag-price">₹199</span>
-          </div>
-          <p class="tag-body">3 pieces of fresh spiced fish fry.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Fish Fry (3p)', -1)">-</button>
-            <span class="qty-display" id="qty-Fish Fry (3p)">0</span>
-            <button class="cart-btn" onclick="updateItem('Fish Fry (3p)', 1)">+</button>
-          </div>
-        </div>
+      <div class="modal-content-grid">
+        
+        <div class="menu-scroll-pane">
+          
+          <div id="tab-combos" class="menu-tab-view active">
+            <h3 class="tab-category-title">Combos</h3>
+            <span class="tab-category-note">Pre-order 3 hrs before | Half: 3–4 P | Full: 5–6 P</span>
 
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Apollo Fish</span>
-            <span class="tag-price">₹329</span>
-          </div>
-          <p class="tag-body">Available in Wet, Dry, or Kadak styles.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Apollo Fish [wet/dry/kadak]', -1)">-</button>
-            <span class="qty-display" id="qty-Apollo Fish [wet/dry/kadak]">0</span>
-            <button class="cart-btn" onclick="updateItem('Apollo Fish [wet/dry/kadak]', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Chicken Joints</span>
-            <span class="tag-price">₹179 / ₹339</span>
-          </div>
-          <p class="tag-body">Choice of 1 piece or 2 pieces.</p>
-          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
-            <div class="cart-controls">
-              <span style="font-size: 0.75rem;">1 Pc (₹179):</span>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <button class="table-cart-btn" onclick="updateItem('Chicken Joint (1p)', -1)">-</button>
-                <span class="table-qty-display" id="qty-Chicken Joint (1p)">0</span>
-                <button class="table-cart-btn" onclick="updateItem('Chicken Joint (1p)', 1)">+</button>
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Bagara Rice + Chicken Combo</div>
+                <div class="food-sub">Select style & size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_chick" class="variant-picker">
+                  <option value="649">Chicken Curry (Half) - ₹649</option>
+                  <option value="1099">Chicken Curry (Full) - ₹1099</option>
+                  <option value="649">Chicken Fry (Half) - ₹649</option>
+                  <option value="1099">Chicken Fry (Full) - ₹1099</option>
+                  <option value="649">Chicken Joints (Half) - ₹649</option>
+                  <option value="1099">Chicken Joints (Full) - ₹1099</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Bagara Rice +', 'sel_combo_chick')">+ Add</button>
               </div>
             </div>
-            <div class="cart-controls">
-              <span style="font-size: 0.75rem;">2 Pcs (₹339):</span>
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <button class="table-cart-btn" onclick="updateItem('Chicken Joints (2p)', -1)">-</button>
-                <span class="table-qty-display" id="qty-Chicken Joints (2p)">0</span>
-                <button class="table-cart-btn" onclick="updateItem('Chicken Joints (2p)', 1)">+</button>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Bagara Rice + Mutton Combo</div>
+                <div class="food-sub">Select style & size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_mutt" class="variant-picker">
+                  <option value="999">Mutton Curry (Half) - ₹999</option>
+                  <option value="1799">Mutton Curry (Full) - ₹1799</option>
+                  <option value="999">Mutton Fry (Half) - ₹999</option>
+                  <option value="1799">Mutton Fry (Full) - ₹1799</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Bagara Rice +', 'sel_combo_mutt')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Bagara Rice + Egg Masala</div>
+                <div class="food-sub">Select portion size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_egg" class="variant-picker">
+                  <option value="399">Half (3-4 people) - ₹399</option>
+                  <option value="649">Full (5-6 people) - ₹649</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Bagara Rice + Egg Masala', 'sel_combo_egg')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Kushka Rice + Chicken Combo</div>
+                <div class="food-sub">Select chicken joints or fry:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_kushka" class="variant-picker">
+                  <option value="649">Chicken Joints (Half) - ₹649</option>
+                  <option value="1099">Chicken Joints (Full) - ₹1099</option>
+                  <option value="649">Chicken Fry (Half) - ₹649</option>
+                  <option value="1099">Chicken Fry (Full) - ₹1099</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Kushka Rice +', 'sel_combo_kushka')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Bagara Rice + Veg Gravy</div>
+                <div class="food-sub">Choose curry type & size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_veg1" class="variant-picker">
+                  <option value="399">Mirchi ka Salan (Half) - ₹399</option>
+                  <option value="699">Mirchi ka Salan (Full) - ₹699</option>
+                  <option value="399">Gutti Vankaya (Half) - ₹399</option>
+                  <option value="699">Gutti Vankaya (Full) - ₹699</option>
+                  <option value="399">Mixed Veg Kurma (Half) - ₹399</option>
+                  <option value="699">Mixed Veg Kurma (Full) - ₹699</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Bagara Rice +', 'sel_combo_veg1')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Bagara Rice + Butter Gravy</div>
+                <div class="food-sub">Choose Kaju or Paneer:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_combo_veg2" class="variant-picker">
+                  <option value="749">Kaju Butter Masala (Half) - ₹749</option>
+                  <option value="1299">Kaju Butter Masala (Full) - ₹1299</option>
+                  <option value="749">Paneer Butter Masala (Half) - ₹749</option>
+                  <option value="1299">Paneer Butter Masala (Full) - ₹1299</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Bagara Rice +', 'sel_combo_veg2')">+ Add</button>
               </div>
             </div>
           </div>
+
+          <div id="tab-biryani" class="menu-tab-view">
+            <h3 class="tab-category-title">Dum Biryani</h3>
+            <span class="tab-category-note">Authentic slow cooked pot biryani</span>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Dum Biryani</div>
+                <div class="food-sub">Select portion size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_biry_chick" class="variant-picker">
+                  <option value="149">Single - ₹149</option>
+                  <option value="289">Full - ₹289</option>
+                  <option value="449">Handi - ₹449</option>
+                  <option value="629">Family - ₹629</option>
+                  <option value="759">Jumbo - ₹759</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Chicken Dum Biryani', 'sel_biry_chick')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Mutton Dum Biryani</div>
+                <div class="food-sub">Select portion size:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_biry_mutt" class="variant-picker">
+                  <option value="229">Single - ₹229</option>
+                  <option value="359">Full - ₹359</option>
+                  <option value="549">Handi - ₹549</option>
+                  <option value="849">Family - ₹849</option>
+                  <option value="1099">Jumbo - ₹1099</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Mutton Dum Biryani', 'sel_biry_mutt')">+ Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-starters" class="menu-tab-view">
+            <h3 class="tab-category-title">Starters</h3>
+            <span class="tab-category-note">Select specific starter style</span>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Starters</div>
+                <div class="food-sub">Choose preparation style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_strt_chick" class="variant-picker">
+                  <option value="259">Chicken Pakodi - ₹259</option>
+                  <option value="259">Chicken Ghee Rost - ₹259</option>
+                  <option value="259">Chicken Fry - ₹259</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_strt_chick')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Mutton Starters</div>
+                <div class="food-sub">Choose preparation style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_strt_mutt" class="variant-picker">
+                  <option value="329">Mutton Ghee Rost - ₹329</option>
+                  <option value="329">Mutton Fry - ₹329</option>
+                  <option value="329">Mutton Bones Fry - ₹329</option>
+                  <option value="329">Mutton Liver Fry - ₹329</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_strt_mutt')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Boti / Brain Fry</div>
+                <div class="food-sub">Choose item:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_boti_brain" class="variant-picker">
+                  <option value="259">Boti Fry - ₹259</option>
+                  <option value="259">Brain Fry - ₹259</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_boti_brain')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Fish Fry (3p)</div></div>
+              <div class="food-ctrls">
+                <div class="food-price">₹199</div>
+                <button class="add-btn" onclick="addDirect('Fish Fry (3 pieces)', 199)">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Apollo Fish</div>
+                <div class="food-sub">Choose style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_apollo" class="variant-picker">
+                  <option value="329">Apollo Fish (Wet) - ₹329</option>
+                  <option value="329">Apollo Fish (Dry) - ₹329</option>
+                  <option value="329">Apollo Fish (Kadak) - ₹329</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_apollo')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Joints</div></div>
+              <div class="food-ctrls">
+                <select id="sel_joints" class="variant-picker">
+                  <option value="179">1 piece - ₹179</option>
+                  <option value="339">2 pieces - ₹339</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Chicken Joints', 'sel_joints')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Karimnagar Kodi Wings</div></div>
+              <div class="food-ctrls">
+                <div class="food-price">₹259</div>
+                <button class="add-btn" onclick="addDirect('Karimnagar Kodi Wings', 259)">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Paneer 65</div></div>
+              <div class="food-ctrls">
+                <div class="food-price">₹259</div>
+                <button class="add-btn" onclick="addDirect('Paneer 65', 259)">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Kaju Fry [Dry]</div></div>
+              <div class="food-ctrls">
+                <div class="food-price">₹299</div>
+                <button class="add-btn" onclick="addDirect('Kaju Fry [Dry]', 299)">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Gobi 65 / Aloo 65</div>
+                <div class="food-sub">Choose variant:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_gobi_aloo" class="variant-picker">
+                  <option value="179">Gobi 65 - ₹179</option>
+                  <option value="179">Aloo 65 - ₹179</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_gobi_aloo')">+ Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-curries" class="menu-tab-view">
+            <h3 class="tab-category-title">Curries</h3>
+            <span class="tab-category-note">Select your exact gravy</span>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Curry</div>
+                <div class="food-sub">Choose style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_chick_curry" class="variant-picker">
+                  <option value="259">Shaadi Ka Chicken - ₹259</option>
+                  <option value="259">Chicken Butter Masala - ₹259</option>
+                  <option value="259">Chicken Dhum Ka Masala - ₹259</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_chick_curry')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Mutton Curry</div>
+                <div class="food-sub">Choose style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_mutt_curry" class="variant-picker">
+                  <option value="319">Mutton Masala - ₹319</option>
+                  <option value="319">Mutton Dhum Ka Masala - ₹319</option>
+                  <option value="319">Mutton Methi Masala - ₹319</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_mutt_curry')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Mutton Dalcha / Marag</div>
+                <div class="food-sub">Serves 3 to 4 people:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_dalcha_marag" class="variant-picker">
+                  <option value="999">Mutton Dalcha (3-4P) - ₹999</option>
+                  <option value="999">Mutton Marag (3-4P) - ₹999</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_dalcha_marag')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Egg Dishes</div>
+                <div class="food-sub">Choose style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_egg_dishes" class="variant-picker">
+                  <option value="169">Egg Masala - ₹169</option>
+                  <option value="169">Egg Curry - ₹169</option>
+                  <option value="169">Egg Bhurji - ₹169</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_egg_dishes')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Omlet</div></div>
+              <div class="food-ctrls">
+                <div class="food-price">₹79</div>
+                <button class="add-btn" onclick="addDirect('Omlet', 79)">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Paneer Curries</div>
+                <div class="food-sub">Choose style:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_paneer_curry" class="variant-picker">
+                  <option value="259">Paneer Butter Masala - ₹259</option>
+                  <option value="259">Paneer Roast - ₹259</option>
+                  <option value="259">Paneer Kadai - ₹259</option>
+                  <option value="259">Paneer Kaju Butter - ₹259</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_paneer_curry')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Jeera Rice + Curry</div>
+                <div class="food-sub">Choose curry type:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_jeera_combo" class="variant-picker">
+                  <option value="299">Jeera Rice + Mixed Veg Curry - ₹299</option>
+                  <option value="299">Jeera Rice + Aloo Masala - ₹299</option>
+                  <option value="299">Jeera Rice + Gobi Masala - ₹299</option>
+                  <option value="299">Jeera Rice + Dal Fry - ₹299</option>
+                  <option value="299">Jeera Rice + Dal Tadka - ₹299</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('', 'sel_jeera_combo')">+ Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-ricebowls" class="menu-tab-view">
+            <h3 class="tab-category-title">Rice Bowl</h3>
+            <span class="tab-category-note">Single-serve comfort meals</span>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Kaju Butter Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹159</div><button class="add-btn" onclick="addDirect('Kaju Butter Rice Bowl', 159)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Kaju Masala Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹149</div><button class="add-btn" onclick="addDirect('Kaju Masala Bowl', 149)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹149</div><button class="add-btn" onclick="addDirect('Chicken Rice Bowl', 149)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Butter Chicken Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹159</div><button class="add-btn" onclick="addDirect('Butter Chicken Rice Bowl', 159)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Sambar Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹129</div><button class="add-btn" onclick="addDirect('Sambar Rice Bowl', 129)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Dal Fry Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹129</div><button class="add-btn" onclick="addDirect('Dal Fry Rice Bowl', 129)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Dal Tadak Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹129</div><button class="add-btn" onclick="addDirect('Dal Tadak Rice Bowl', 129)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Paneer Butter Masala Rice Bowl</div></div>
+              <div class="food-ctrls"><div class="food-price">₹159</div><button class="add-btn" onclick="addDirect('Paneer Butter Masala Rice Bowl', 159)">+ Add</button></div>
+            </div>
+          </div>
+
+          <div id="tab-pickles" class="menu-tab-view">
+            <h3 class="tab-category-title">Pickle</h3>
+            <span class="tab-category-note">Traditional handcrafted homestyle pickles</span>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Pickle</div>
+                <div class="food-sub">Select weight & bone type:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_pckl_chick" class="variant-picker">
+                  <option value="699">½ kg (With Bone) - ₹699</option>
+                  <option value="799">½ kg (Bone-less) - ₹799</option>
+                  <option value="1199">1 kg (With Bone) - ₹1199</option>
+                  <option value="1499">1 kg (Bone-less) - ₹1499</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Chicken Pickle', 'sel_pckl_chick')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Gongura Pickle</div>
+                <div class="food-sub">Select weight & bone type:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_pckl_gong" class="variant-picker">
+                  <option value="699">½ kg (With Bone) - ₹699</option>
+                  <option value="799">½ kg (Bone-less) - ₹799</option>
+                  <option value="1199">1 kg (With Bone) - ₹1199</option>
+                  <option value="1499">1 kg (Bone-less) - ₹1499</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Chicken Gongura Pickle', 'sel_pckl_gong')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Chicken Coriander Pickle</div>
+                <div class="food-sub">Select weight & bone type:</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_pckl_cori" class="variant-picker">
+                  <option value="699">½ kg (With Bone) - ₹699</option>
+                  <option value="799">½ kg (Bone-less) - ₹799</option>
+                  <option value="1199">1 kg (With Bone) - ₹1199</option>
+                  <option value="1499">1 kg (Bone-less) - ₹1499</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Chicken Coriander Pickle', 'sel_pckl_cori')">+ Add</button>
+              </div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info">
+                <div class="food-name"><span class="food-indicator nonveg-symbol" title="Non-Vegetarian"></span> Mutton Pickle</div>
+                <div class="food-sub">1 kg pack (Bone vs Bone-less):</div>
+              </div>
+              <div class="food-ctrls">
+                <select id="sel_pckl_mutt" class="variant-picker">
+                  <option value="2199">1 kg (With Bone) - ₹2199</option>
+                  <option value="2499">1 kg (Bone-less) - ₹2499</option>
+                </select>
+                <button class="add-btn" onclick="addSplitItem('Mutton Pickle', 'sel_pckl_mutt')">+ Add</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-extras" class="menu-tab-view">
+            <h3 class="tab-category-title">Extras</h3>
+            <span class="tab-category-note">Accompaniments & rice plates</span>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Ghee</div></div>
+              <div class="food-ctrls"><div class="food-price">₹29</div><button class="add-btn" onclick="addDirect('Ghee', 29)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Butter</div></div>
+              <div class="food-ctrls"><div class="food-price">₹29</div><button class="add-btn" onclick="addDirect('Butter', 29)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Only Biryani Rice</div></div>
+              <div class="food-ctrls"><div class="food-price">₹99</div><button class="add-btn" onclick="addDirect('Only Biryani Rice', 99)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> White Rice</div></div>
+              <div class="food-ctrls"><div class="food-price">₹49</div><button class="add-btn" onclick="addDirect('White Rice', 49)">+ Add</button></div>
+            </div>
+
+            <div class="food-row">
+              <div class="food-info"><div class="food-name"><span class="food-indicator veg-symbol" title="Vegetarian"></span> Only Bagara Rice</div></div>
+              <div class="food-ctrls"><div class="food-price">₹99</div><button class="add-btn" onclick="addDirect('Only Bagara Rice', 99)">+ Add</button></div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Karimnagar Kodi Wings</span>
-            <span class="tag-price">₹259</span>
+        <div class="cart-pane" id="cartSection">
+          <div>
+            <div class="cart-head">
+              <h3>Order Basket</h3>
+              <span id="cartCountBadge" class="cart-counter">0 ITEMS</span>
+            </div>
+            <div class="cart-list" id="cartListContainer">
+              <p style="color: var(--font-muted); font-size: 0.82rem; text-align: center; margin-top: 25px;">
+                Your basket is empty.<br />Select items from the menu.
+              </p>
+            </div>
           </div>
-          <p class="tag-body">Telangana style crispy spiced chicken wings.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Karimnagar Kodi Wings', -1)">-</button>
-            <span class="qty-display" id="qty-Karimnagar Kodi Wings">0</span>
-            <button class="cart-btn" onclick="updateItem('Karimnagar Kodi Wings', 1)">+</button>
+
+          <div class="cart-footer">
+            <div class="total-display">
+              <span>Grand Total:</span>
+              <span id="cartGrandTotal">₹0</span>
+            </div>
+            <input type="text" id="orderCustName" class="form-control" placeholder="Your Name" />
+            <input type="text" id="orderCustAddress" class="form-control" placeholder="Delivery Address in Vikarabad" />
+            <button class="btn-checkout" onclick="dispatchOrder()">
+              <i class="fa-brands fa-whatsapp" style="font-size: 1.15rem;"></i> Send Order to WhatsApp
+            </button>
           </div>
         </div>
+
       </div>
-
-      <p class="section-sub">Veg Starters</p>
-      <div class="recipe-grid">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Paneer 65</span>
-            <span class="tag-price">₹259</span>
-          </div>
-          <p class="tag-body">Crispy fried spiced paneer cubes.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Paneer 65', -1)">-</button>
-            <span class="qty-display" id="qty-Paneer 65">0</span>
-            <button class="cart-btn" onclick="updateItem('Paneer 65', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Kaju Fry [dry]</span>
-            <span class="tag-price">₹299</span>
-          </div>
-          <p class="tag-body">Golden roasted spiced cashews.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Kaju Fry [dry]', -1)">-</button>
-            <span class="qty-display" id="qty-Kaju Fry [dry]">0</span>
-            <button class="cart-btn" onclick="updateItem('Kaju Fry [dry]', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Gobi 65 / Aloo 65</span>
-            <span class="tag-price">₹179</span>
-          </div>
-          <p class="tag-body">Crispy spiced cauliflower or potato bites.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Gobi 65 / Aloo 65', -1)">-</button>
-            <span class="qty-display" id="qty-Gobi 65 / Aloo 65">0</span>
-            <button class="cart-btn" onclick="updateItem('Gobi 65 / Aloo 65', 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="menu-group" id="biryani">
-      <h2 class="section-title">Dum Biryani</h2>
-      <p class="section-sub">Authentic hyderabadi spices cooked on dum</p>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Biryani Item</th>
-              <th>Single</th>
-              <th>Full</th>
-              <th>Handi</th>
-              <th>Family</th>
-              <th>Jumbo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Chicken Dum</strong></td>
-              <td>
-                ₹149
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Single)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Single)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Single)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹289
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Full)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹449
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Handi)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Handi)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Handi)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹629
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Family)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Family)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Family)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹759
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Jumbo)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Chicken Dum Biryani (Jumbo)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Chicken Dum Biryani (Jumbo)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Mutton Dum</strong></td>
-              <td>
-                ₹229
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Single)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Single)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Single)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹359
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Full)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Full)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Full)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹549
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Handi)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Handi)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Handi)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹849
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Family)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Family)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Family)', 1)">+</button>
-                </div>
-              </td>
-              <td>
-                ₹1099
-                <div class="table-cart-controls">
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Jumbo)', -1)">-</button>
-                  <span class="table-qty-display" id="qty-Mutton Dum Biryani (Jumbo)">0</span>
-                  <button class="table-cart-btn" onclick="updateItem('Mutton Dum Biryani (Jumbo)', 1)">+</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="menu-group" id="curries">
-      <h2 class="section-title">Curries</h2>
-
-      <p class="section-sub">Non-Veg Curries</p>
-      <div class="recipe-grid" style="margin-bottom: 30px;">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Chicken Curry</span>
-            <span class="tag-price">₹259</span>
-          </div>
-          <p class="tag-body">Shaadi ka chicken / Butter masala / Dhum ka masala</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Chicken Curry', -1)">-</button>
-            <span class="qty-display" id="qty-Chicken Curry">0</span>
-            <button class="cart-btn" onclick="updateItem('Chicken Curry', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Mutton Curry</span>
-            <span class="tag-price">₹319</span>
-          </div>
-          <p class="tag-body">Mutton masala / Dhum ka masala / Methi masala</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Mutton Curry', -1)">-</button>
-            <span class="qty-display" id="qty-Mutton Curry">0</span>
-            <button class="cart-btn" onclick="updateItem('Mutton Curry', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Mutton Special</span>
-            <span class="tag-price">₹999</span>
-          </div>
-          <p class="tag-body">Dalcha / Marag (serves 3 to 4 people)</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Mutton Dalcha / Marag', -1)">-</button>
-            <span class="qty-display" id="qty-Mutton Dalcha / Marag">0</span>
-            <button class="cart-btn" onclick="updateItem('Mutton Dalcha / Marag', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Egg Specials</span>
-            <span class="tag-price">₹169</span>
-          </div>
-          <p class="tag-body">Egg Masala / Egg Curry / Egg Bhurji</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Egg Masala / Curry / Bhurji', -1)">-</button>
-            <span class="qty-display" id="qty-Egg Masala / Curry / Bhurji">0</span>
-            <button class="cart-btn" onclick="updateItem('Egg Masala / Curry / Bhurji', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Omlet</span>
-            <span class="tag-price">₹79</span>
-          </div>
-          <p class="tag-body">Fresh fluffly spiced egg omelet.</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Omlet', -1)">-</button>
-            <span class="qty-display" id="qty-Omlet">0</span>
-            <button class="cart-btn" onclick="updateItem('Omlet', 1)">+</button>
-          </div>
-        </div>
-      </div>
-
-      <p class="section-sub">Veg Curries</p>
-      <div class="recipe-grid">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Paneer Specials</span>
-            <span class="tag-price">₹259</span>
-          </div>
-          <p class="tag-body">Butter masala / Roast / Kadai / Kaju butter</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Paneer Curry', -1)">-</button>
-            <span class="qty-display" id="qty-Paneer Curry">0</span>
-            <button class="cart-btn" onclick="updateItem('Paneer Curry', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Jeera Rice + Veg Curry</span>
-            <span class="tag-price">₹299</span>
-          </div>
-          <p class="tag-body">Jeera Rice with Mixed veg curry / Aloo masala / Gobi masala / Dal fry / Dal Tadka</p>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Jeera Rice + Veg Curry', -1)">-</button>
-            <span class="qty-display" id="qty-Jeera Rice + Veg Curry">0</span>
-            <button class="cart-btn" onclick="updateItem('Jeera Rice + Veg Curry', 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="menu-group" id="bowls">
-      <h2 class="section-title">Rice Bowl</h2>
-      <div class="recipe-grid">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Kaju Butter Rice Bowl</span>
-            <span class="tag-price">₹159</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Kaju butter rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Kaju butter rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Kaju butter rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Kaju Masala Bowl</span>
-            <span class="tag-price">₹149</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Kaju Masala bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Kaju Masala bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Kaju Masala bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Chicken Rice Bowl</span>
-            <span class="tag-price">₹149</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Chicken rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Chicken rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Chicken rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Butter Chicken Rice Bowl</span>
-            <span class="tag-price">₹159</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Butter chicken rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Butter chicken rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Butter chicken rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Sambar Rice Bowl</span>
-            <span class="tag-price">₹129</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Sambar rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Sambar rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Sambar rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Dal Fry Rice Bowl</span>
-            <span class="tag-price">₹129</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Dal fry rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Dal fry rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Dal fry rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Dal Tadka Rice Bowl</span>
-            <span class="tag-price">₹129</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Dal tadak rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Dal tadak rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Dal tadak rice bowl', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Paneer Butter Masala Bowl</span>
-            <span class="tag-price">₹159</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Paneer butter masala rice bowl', -1)">-</button>
-            <span class="qty-display" id="qty-Paneer butter masala rice bowl">0</span>
-            <button class="cart-btn" onclick="updateItem('Paneer butter masala rice bowl', 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="menu-group" id="extras">
-      <h2 class="section-title">Extras</h2>
-      <div class="recipe-grid">
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Ghee</span>
-            <span class="tag-price">₹29</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Ghee', -1)">-</button>
-            <span class="qty-display" id="qty-Ghee">0</span>
-            <button class="cart-btn" onclick="updateItem('Ghee', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Butter</span>
-            <span class="tag-price">₹29</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Butter', -1)">-</button>
-            <span class="qty-display" id="qty-Butter">0</span>
-            <button class="cart-btn" onclick="updateItem('Butter', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Only Biryani Rice</span>
-            <span class="tag-price">₹99</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Only biryani rice', -1)">-</button>
-            <span class="qty-display" id="qty-Only biryani rice">0</span>
-            <button class="cart-btn" onclick="updateItem('Only biryani rice', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">White Rice</span>
-            <span class="tag-price">₹49</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('White rice', -1)">-</button>
-            <span class="qty-display" id="qty-White rice">0</span>
-            <button class="cart-btn" onclick="updateItem('White rice', 1)">+</button>
-          </div>
-        </div>
-
-        <div class="recipe-tag">
-          <div class="tag-header">
-            <span class="tag-title">Only Bagara Rice</span>
-            <span class="tag-price">₹99</span>
-          </div>
-          <div class="cart-controls">
-            <button class="cart-btn" onclick="updateItem('Only bagara rice', -1)">-</button>
-            <span class="qty-display" id="qty-Only bagara rice">0</span>
-            <button class="cart-btn" onclick="updateItem('Only bagara rice', 1)">+</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="menu-group" id="pickles">
-      <h2 class="section-title">Pickle</h2>
-      <p class="section-sub">Homemade Artisanal Pickles (Bone / Boneless)</p>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Pickle Item</th>
-              <th>½ kg (Bone / Boneless)</th>
-              <th>1 kg (Bone / Boneless)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Chicken Pickle</strong></td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹699 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Pickle 1/2kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹799 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Pickle 1/2kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1/2kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹1199 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Pickle 1kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹1499 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Pickle 1kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Pickle 1kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Chicken Gongura Pickle</strong></td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹699 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1/2kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹799 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1/2kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1/2kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹1199 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹1499 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Gongura Pickle 1kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Gongura Pickle 1kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Chicken Coriander Pickle</strong></td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹699 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1/2kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹799 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1/2kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1/2kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹1199 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹1499 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Chicken Coriander Pickle 1kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Chicken Coriander Pickle 1kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Mutton Pickle</strong></td>
-              <td>—</td>
-              <td>
-                <div style="margin-bottom: 6px;">
-                  ₹2199 (Bone)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Bone)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Mutton Pickle 1kg (Bone)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Bone)', 1)">+</button>
-                  </div>
-                </div>
-                <div>
-                  ₹2499 (Boneless)
-                  <div class="table-cart-controls">
-                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Boneless)', -1)">-</button>
-                    <span class="table-qty-display" id="qty-Mutton Pickle 1kg (Boneless)">0</span>
-                    <button class="table-cart-btn" onclick="updateItem('Mutton Pickle 1kg (Boneless)', 1)">+</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
+    </div>
   </div>
 
-  <div class="floating-cart" id="cartBar">
-    <span id="cartCount">0 items added</span>
-    <button onclick="sendBundledOrder()">Send WhatsApp Order</button>
-  </div>
-
-  <div class="control-deck">
-    <span style="font-size: 0.75rem; letter-spacing: 1px;">HEARTH:</span>
-    <button class="ctrl-btn active" onclick="setHeat('low', this)">Low</button>
-    <button class="ctrl-btn" onclick="setHeat('high', this)">High</button>
-    <button class="ctrl-btn" id="audioToggle" onclick="toggleHearthSound()">🔊 Sound</button>
-  </div>
+  <nav class="mobile-bottom-bar">
+    <div class="mobile-bottom-item" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </div>
+    <div class="mobile-bottom-item" onclick="openOrderModal()">
+      <i class="fa-solid fa-bowl-food"></i>
+      <span>Menu</span>
+    </div>
+    <div class="bottom-order-pill" onclick="openOrderModal()">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span>Order (<span id="mobilePillCount">0</span>)</span>
+    </div>
+    <a href="https://wa.me/919966467070" target="_blank" class="mobile-bottom-item">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="tel:9966467070" class="mobile-bottom-item">
+      <i class="fa-solid fa-phone"></i>
+      <span>Call</span>
+    </a>
+  </nav>
 
   <footer>
-    <p>© 2026 Home Pot Cloud Kitchen • Vikarabad Direct Delivery</p>
-    <p>
-      Contact: <a href="tel:9966467070">9966467070</a> / <a href="tel:9966998556">9966998556</a> | 
-      Web: <a href="https://www.homepot.in" target="_blank">www.homepot.in</a> |
-      Instagram: <a href="https://instagram.com/homepot_cloudkitchen" target="_blank">@homepot_cloudkitchen</a>
-    </p>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <img src="logo.png" alt="Home Pot Footer Logo" style="height:34px;" />
+            <h4 style="margin-bottom:0;">HOME POT</h4>
+          </div>
+          <p><i class="fa-solid fa-location-dot" style="margin-right:6px; color: var(--gold-primary);"></i> Vikarabad Cloud Kitchen (Direct Delivery)</p>
+          <p><i class="fa-brands fa-whatsapp" style="margin-right:6px; color: var(--gold-primary);"></i> Primary: +91 9966467070</p>
+          <p><i class="fa-brands fa-whatsapp" style="margin-right:6px; color: var(--gold-primary);"></i> Alternate: +91 9966998556</p>
+          <p><i class="fa-solid fa-globe" style="margin-right:6px; color: var(--gold-primary);"></i> WWW.HOMEPOT.IN</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#about">About Home Pot</a></li>
+            <li><a href="#standards">Our Standards</a></li>
+            <li><a href="javascript:void(0)" onclick="openOrderModal()">Food Menu</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Our Motto</h4>
+          <p>"Homely food, made with care."</p>
+          <p>"Ghar jaisa swaad, har bite mein pyaar."</p>
+        </div>
+      </div>
+
+      <div class="bottom-bar">
+        &copy; 2026 HOME POT CLOUD KITCHEN. ALL RIGHTS RESERVED. VIKARABAD.
+      </div>
+    </div>
   </footer>
 
   <script>
-    function checkKitchenStatus() {
-      const now = new Date();
-      const hour = now.getHours();
-      const dot = document.getElementById('statusDot');
-      const text = document.getElementById('statusText');
+    let cart = [];
 
-      if (hour >= 11 && hour < 22) {
-        dot.className = 'status-indicator status-open';
-        text.innerHTML = 'KITCHEN OPEN • Taking Direct WhatsApp Orders';
+    function toggleDrawer() {
+      const drawer = document.getElementById('mobileDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      const isOpen = drawer.classList.contains('open');
+      if (isOpen) {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        document.body.style.overflow = 'auto';
       } else {
-        dot.className = 'status-indicator status-closed';
-        text.innerHTML = 'KITCHEN CLOSED • Pre-orders Accepted for Tomorrow';
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
       }
     }
-    checkKitchenStatus();
 
-    let cart = {};
-
-    function updateItem(name, change) {
-      if (!cart[name]) cart[name] = 0;
-      cart[name] += change;
-      if (cart[name] <= 0) delete cart[name];
-
-      const el = document.getElementById(`qty-${name}`);
-      if (el) el.innerText = cart[name] || 0;
-
-      renderCartBar();
+    function openOrderModal() {
+      document.getElementById('orderModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
-    function renderCartBar() {
-      const cartBar = document.getElementById('cartBar');
-      const cartCount = document.getElementById('cartCount');
-      const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+    function closeOrderModal() {
+      document.getElementById('orderModal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
 
-      if (totalItems > 0) {
-        cartBar.style.display = 'flex';
-        cartCount.innerText = `${totalItems} item${totalItems > 1 ? 's' : ''} selected`;
+    function showTab(tabName, tabBtn) {
+      document.querySelectorAll('.menu-tab-view').forEach(view => view.classList.remove('active'));
+      document.querySelectorAll('.filter-tab').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById('tab-' + tabName).classList.add('active');
+      tabBtn.classList.add('active');
+      
+      tabBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+
+    function addDirect(name, price) {
+      const existing = cart.find(i => i.name === name && i.price === price);
+      if (existing) {
+        existing.qty += 1;
       } else {
-        cartBar.style.display = 'none';
+        cart.push({ name, price, qty: 1 });
       }
+      refreshCart();
     }
 
-    function sendBundledOrder() {
-      let message = "Hello Home Pot Cloud Kitchen! I would like to order:\n";
-      for (const [item, qty] of Object.entries(cart)) {
-        message += `• ${qty}x ${item}\n`;
-      }
-      const encoded = encodeURIComponent(message);
-      window.open(`https://wa.me/919966467070?text=${encoded}`, '_blank');
+    function addSplitItem(prefix, selectId) {
+      const sel = document.getElementById(selectId);
+      const price = parseInt(sel.value);
+      const variantText = sel.options[sel.selectedIndex].text.split(' - ')[0].trim();
+      const fullName = prefix ? `${prefix} ${variantText}` : variantText;
+      addDirect(fullName, price);
     }
 
-    function setHeat(level, btnElement) {
-      document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
-      btnElement.classList.add('active');
-      const glow = document.getElementById('hearthGlow');
-      glow.style.opacity = level === 'high' ? '0.7' : '0.3';
+    function changeQuantity(index, change) {
+      cart[index].qty += change;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      refreshCart();
     }
 
-    let audioCtx, isPlaying = false, noiseNode;
-    function toggleHearthSound() {
-      const btn = document.getElementById('audioToggle');
-      if (!isPlaying) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const bufferSize = audioCtx.sampleRate * 2;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = buffer.getChannelData(0);
-        let lastOut = 0.0;
-        for (let i = 0; i < bufferSize; i++) {
-          const white = Math.random() * 2 - 1;
-          output[i] = (lastOut + (0.02 * white)) / 1.02;
-          lastOut = output[i];
-          output[i] *= 3.5;
-        }
-        noiseNode = audioCtx.createBufferSource();
-        noiseNode.buffer = buffer;
-        noiseNode.loop = true;
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 380;
-        noiseNode.connect(filter);
-        filter.connect(audioCtx.destination);
-        noiseNode.start();
-        btn.innerText = '🔇 Mute';
-        isPlaying = true;
-      } else {
-        noiseNode.stop();
-        audioCtx.close();
-        btn.innerText = '🔊 Sound';
-        isPlaying = false;
+    function refreshCart() {
+      const container = document.getElementById('cartListContainer');
+      const badge = document.getElementById('cartCountBadge');
+      const totalDisplay = document.getElementById('cartGrandTotal');
+      const pillCount = document.getElementById('mobilePillCount');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <p style="color: var(--font-muted); font-size: 0.82rem; text-align: center; margin-top: 25px;">
+            Your basket is empty.<br />Select items from the menu.
+          </p>
+        `;
+        badge.innerText = '0 ITEMS';
+        totalDisplay.innerText = '₹0';
+        pillCount.innerText = '0';
+        return;
       }
+
+      let total = 0;
+      let totalQty = 0;
+      container.innerHTML = '';
+
+      cart.forEach((item, idx) => {
+        total += item.price * item.qty;
+        totalQty += item.qty;
+
+        const row = document.createElement('div');
+        row.className = 'cart-row';
+        row.innerHTML = `
+          <div style="flex: 1; padding-right: 8px;">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-rate">₹${item.price} each</div>
+          </div>
+          <div class="cart-qty-buttons">
+            <button class="cart-qty-btn" onclick="changeQuantity(${idx}, -1)">-</button>
+            <span style="font-size: 0.82rem; min-width: 14px; text-align: center;">${item.qty}</span>
+            <button class="cart-qty-btn" onclick="changeQuantity(${idx}, 1)">+</button>
+          </div>
+          <div style="font-weight:600; margin-left: 8px; min-width: 48px; text-align: right;">
+            ₹${item.price * item.qty}
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      badge.innerText = `${totalQty} ITEM${totalQty > 1 ? 'S' : ''}`;
+      totalDisplay.innerText = `₹${total}`;
+      pillCount.innerText = `${totalQty}`;
+    }
+
+    function dispatchOrder() {
+      if (cart.length === 0) {
+        alert("Please add dishes to your basket first.");
+        return;
+      }
+
+      const name = document.getElementById('orderCustName').value.trim();
+      const addr = document.getElementById('orderCustAddress').value.trim();
+
+      if (!name || !addr) {
+        alert("Please enter both your Name and Delivery Address in Vikarabad.");
+        return;
+      }
+
+      let text = `*New Order - HOME POT CLOUD KITCHEN*%0A`;
+      text += `*Customer:* ${encodeURIComponent(name)}%0A`;
+      text += `*Delivery Address:* ${encodeURIComponent(addr)}%0A`;
+      text += `--------------------------------%0A`;
+
+      let grandTotal = 0;
+      cart.forEach((item, i) => {
+        const itemSum = item.price * item.qty;
+        grandTotal += itemSum;
+        text += `${i + 1}. ${encodeURIComponent(item.name)} x ${item.qty} = ₹${itemSum}%0A`;
+      });
+
+      text += `--------------------------------%0A`;
+      text += `*Grand Total: ₹${grandTotal}*%0A%0A`;
+      text += `Please confirm order availability and delivery timing.`;
+
+      window.open(`https://wa.me/919966467070?text=${text}`, '_blank');
     }
   </script>
 </body>
